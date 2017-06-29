@@ -52,6 +52,51 @@ print(neg_x)
 
 
 # Using variables (p.38)
+sess = tf.InteractiveSession()
+
+raw_data = [1., 2., 8., -1., 0., 5.5, 6., 13]
+spike = tf.Variable(False)
+spike.initializer.run()
+
+for i in range(1, len(raw_data)):
+    if raw_data[i] - raw_data[i - 1] > 5:
+        updater = tf.assign(spike, True)
+        updater.eval()
+    else:
+        updater = tf.assign(spike, False)
+        updater.eval()
+    print("Spike", spike.eval())
+
+sess.close()
+
+# Saving and Loading Variables (p.40)
+sess = tf.InteractiveSession()
+
+raw_data = [1., 2., 8., -1., 0., 5.5, 6., 13]
+spikes = tf.Variable([False] * len(raw_data), name='spikes')
+spikes.initializer.run()
+
+saver = tf.train.Saver()
+
+for i in range(1, len(raw_data)):
+    if raw_data[i] - raw_data[i-1] > 5:
+        spikes_val = spikes.eval()
+        spikes_val[i] = True
+        updater = tf.assign(spikes, spikes_val)
+        updater.eval()
+
+print(spikes)
+
+sess.close()
+
+
+# Visualizing data using TensorBoard (p.41)
+
+
+
+
+
+
 
 
 
